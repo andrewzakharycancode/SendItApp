@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
+
+def hello_sendit(request):
+    return HttpResponse("Hello, SendIt!")
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("", hello_sendit, name="hello_sendit"),
+    path("admin/", admin.site.urls)
 ]
