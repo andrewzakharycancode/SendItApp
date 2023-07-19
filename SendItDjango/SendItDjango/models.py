@@ -1,43 +1,80 @@
 from django.db import models
 
 #all fields not added
-class User(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    #Figure out the syntax for how to identify the foreign key below
-    email_primary_id = models.ForeignKey(Email, on_delete=models.CASCADE)
-
-#all fields not added
 class Email(models.Model):
-    email_address = models.CharField(max_length=120)
+    email_id = models.AutoField(primary_key=True)
+    email_address = models.CharField(max_length=120, unique=True) 
 
 #all fields not added    
 class PhoneNumber(models.Model):
+    phone_number_id = models.AutoField(primary_key=True)
     country_code = models.CharField(max_length=4)
-
-#all fields not added    
-class Contact(models.Model):
-    first_name = models.CharField(max_length=30)
+    phone_number = models.CharField(max_length=20)
 
 #all fields not added
 class Address(models.Model):
+    address_id = models.AutoField(primary_key=True)
     street_address = models.CharField(max_length=60)
-    
-#all fields not added
-class Message(models.Model):
-    message_text = models.CharField(max_length=500)
+    apartment_number = models.CharField(max_length=20, null=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=30)
+    zip_code = models.CharField(max_length=10)
 
-#99% sure we actually don't need the joiner tables. Django has built in many to many functionality, see notes at bottom of fil
-class MessageRecipient(models.Model):
-    placeholder = models.CharField(max_length=50) #this is a placeholder, all items here are foreign keys / this is a joiner table
+#all fields not added
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    #Figure out the syntax for how to identify the foreign key below
+    email_primary = models.ForeignKey(Email, on_delete=models.CASCADE)
+    profile_picture = models.BinaryField(null=True)
+    phone_number = models.ForeignKey(PhoneNumber, on_delete=models.CASCADE)
+    address_primary = models.ForeignKey(Address, related_name='user_address_primary', on_delete=models.SET_NULL, null=True)
+    address_secondary = models.ForeignKey(Address, related_name='user_address_secondary', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+#all fields not added
+class Contact(models.Model):
+    contact_id = models.AutoField(primary_key=True)
+    phone_number = models.ForeignKey(PhoneNumber, on_delete=models.CASCADE)
+    email_primary = models.ForeignKey(Email, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30, null=True)
+    birthday = models.DateField(null=True)
+    address_primary = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    contact_photo = models.BinaryField(null=True)
+    active = models.BooleanField(default=True)
 
 class Relationship(models.Model):
+    relationship_id = models.AutoField(primary_key=True)
     relationship_type = models.CharField(max_length=100)
 
 #99% sure we actually don't need the joiner tables. Django has built in many to many functionality, see notes at bottom of fil
 class ContactRelationship(models.Model):
-    placeholder2 = models.CharField(max_length=50) #this is a placeholder, all items here are foreign keys / this is a joiner table
-    
+    contact_relationship_id = models.AutoField(primary_key=True)
+    relationship = models.ForeignKey(Relationship, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+
+#all fields not added
+class Message(models.Model):
+    message_id = models.AutoField(primary_key=True)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    message_text = models.CharField(max_length=500)
+    send_date = models.DateTimeField()
+    recurring = models.BooleanField(default=False)
+    attachment = models.BinaryField(null=True)
+    frequency = models.CharField(max_length=50, null=True)
+
+#99% sure we actually don't need the joiner tables. Django has built in many to many functionality, see notes at bottom of fil
+class MessageRecipient(models.Model):
+    message_recipient_id = models.AutoField(primary_key=True)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+
 # Below is a sample model where the model has a characteristic similar to an enum, where there are options for that column, but only a finite number of options
 # class Person(models.Model):
 #     SHIRT_SIZES = [
@@ -47,7 +84,6 @@ class ContactRelationship(models.Model):
 #     ]
 #     name = models.CharField(max_length=60)
 #     shirt_size = models.CharField(max_length=1, choices=SHIRT_SIZES)
-
 
 #many to many and one to one samples
 # poll = models.ForeignKey(
