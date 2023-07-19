@@ -45,7 +45,7 @@ class Contact(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True)
     birthday = models.DateField(null=True)
-    address_primary = models.ForeignKey(Address, related_name='contact_address_primary' on_delete=models.SET_NULL, null=True)
+    address_primary = models.ForeignKey(Address, related_name='contact_address_primary', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     contact_photo = models.ImageField(null=True)
