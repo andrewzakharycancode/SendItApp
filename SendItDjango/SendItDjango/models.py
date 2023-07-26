@@ -1,17 +1,14 @@
 from django.db import models
 
-#all fields not added
 class Email(models.Model):
     email_id = models.AutoField(primary_key=True)
     email_address = models.CharField(max_length=120, unique=True) 
 
-#all fields not added    
 class PhoneNumber(models.Model):
     phone_number_id = models.AutoField(primary_key=True)
     country_code = models.CharField(max_length=4)
     phone_number = models.CharField(max_length=20)
 
-#all fields not added
 class Address(models.Model):
     address_id = models.AutoField(primary_key=True)
     street_address = models.CharField(max_length=60)
@@ -20,7 +17,6 @@ class Address(models.Model):
     state = models.CharField(max_length=30)
     zip_code = models.CharField(max_length=10)
 
-#all fields not added
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30)
@@ -36,7 +32,6 @@ class Relationship(models.Model):
     relationship_id = models.AutoField(primary_key=True)
     relationship_type = models.CharField(max_length=100)
 
-#all fields not added
 class Contact(models.Model):
     contact_id = models.AutoField(primary_key=True)
     phone_number = models.ForeignKey(PhoneNumber, on_delete=models.CASCADE)
@@ -52,11 +47,10 @@ class Contact(models.Model):
     active = models.BooleanField(default=True)
     relationships = models.ManyToManyField(Relationship)
 
-#all fields not added
 class Message(models.Model):
     message_id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipient = models.ManyToManyField(Contact, on_delete=models.CASCADE)
+    recipient = models.ManyToManyField(Contact)
     message_text = models.CharField(max_length=1000)
     send_date = models.DateTimeField()
     recurring = models.BooleanField(default=False)

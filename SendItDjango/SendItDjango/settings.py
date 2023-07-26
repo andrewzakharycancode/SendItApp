@@ -77,9 +77,9 @@ WSGI_APPLICATION = "SendItDjango.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "senditapp-database",
+        "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "root",
+        "PASSWORD": "rootuser",
         "HOST": "senditapp-database.cjuh9o86togv.us-east-2.rds.amazonaws.com",
         "PORT": "5432"
     }
