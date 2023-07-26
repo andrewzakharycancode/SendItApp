@@ -29,3 +29,22 @@
    ```
     python3 manage.py runserver
 3. Navigate to http://127.0.0.1:8000/
+
+## How to run database migrations / create database tables from Django Models
+1. Make any necessary changes to models.py (new tables, new columns, new relationships, data type changes, etc)
+2. Run the following:
+   ```
+   python manage.py makemigrations SendItDjango
+   ```
+   ```
+   python manage.py migrate SendItDgango
+   ```
+3. Check your changes were made via command line:
+   1. Connect to Postgres
+   ```
+   psql -h senditapp-database.cjuh9o86togv.us-east-2.rds.amazonaws.com -U postgres -d postgres -p 5432
+   ```
+   2. Run a SQL command to check your changes, e.g.
+   ```
+   SELECT * FROM table WHERE id=1
+   ```
