@@ -1,0 +1,9 @@
+# Ignore Python bytecode and cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore the __pycache__ directories inside SendItDjango/sendit_api/ and SendItDjango/sendit_api/migrations/
+SendItDjango/sendit_api/__pycache__/
+SendItDjango/sendit_api/migrations/__pycache__/

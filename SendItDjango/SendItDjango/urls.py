@@ -16,15 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse
-from sendit_api import urls as senditapp_urls
-
-def hello_sendit(request):
-    return HttpResponse("Hello, SendIt!")
 
 urlpatterns = [
-    path("", hello_sendit, name="hello_sendit"),
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('sendit_api/', include(senditapp_urls)),
+    path('api/', include('sendit_api.urls')),
 ]
