@@ -1,5 +1,6 @@
-from rest_framework import serializers
 from SendItDjango.models import Email, PhoneNumber, Address, User, Relationship, Contact, Message
+from rest_framework import serializers
+
 
 class EmailSerializer(serializers.ModelSerializer):
     class Meta:
