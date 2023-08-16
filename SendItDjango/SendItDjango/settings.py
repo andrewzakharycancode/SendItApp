@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "SendItDjango",
     "rest_framework",
-    "sendit_api"
+    "sendit_api",
 ]
 
 MIDDLEWARE = [
