@@ -48,3 +48,8 @@
    ```
    SELECT * FROM table WHERE id=1
    ```
+## How to run SendIt React
+From the SendItReact directory:
+1. `npm start`
+2. `npm run ios` -> for running iOS simulator
+3. `npm run android` -> for running Android simulator
