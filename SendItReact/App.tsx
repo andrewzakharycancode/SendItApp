@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,6 +15,8 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
+  Alert
 } from 'react-native';
 
 import {
@@ -25,11 +27,13 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import ScheduleMessageScreen from './src/screens/scheduleMessage';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
+function Section({ children, title }: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -55,17 +59,34 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
+const alert = () => {
+
+  return (
+    <SafeAreaView>
+      <View>
+        <Section title="I'm a section">
+          I'm the new section you rendered by pressing the button.
+        </Section>
+      </View>
+    </SafeAreaView>
+  );
+}
+
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  var isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    //backgroundColor: Colors.darker//lighter
   };
+
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        // barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        // backgroundColor={backgroundStyle.backgroundColor}
+        barStyle={'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
@@ -76,6 +97,10 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <ScheduleMessageScreen />
+          {/* <Button
+            onPress={() => Alert.alert('you pressed the button')}
+            title="I'm a button"></Button>
           <Section title="First fuckin step!">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
@@ -89,7 +114,7 @@ function App(): JSX.Element {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <LearnMoreLinks />
+          <LearnMoreLinks /> */}
         </View>
       </ScrollView>
     </SafeAreaView>
